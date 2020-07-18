@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="DEBUG">
+
+	<Properties>
+		<Property name="log-path">../logs</Property>
+		<Property name="file-name">eureka-server</Property>
+	</Properties>
+
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+		<RollingFile name="File"
+			fileName="${log-path}/${file-name}.log"
+			filePattern="${log-path}/${file-name}-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>%d{dd/MMM/yyyy HH:mm:ss,SSS}- %c{1}: %m%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies>
+			<DefaultRolloverStrategy max="5" />
+		</RollingFile>
+	</Appenders>
+
+	<Loggers>
+		<AsyncLogger name="org.springframework.boot" level="debug" additivity="false">
+			<AppenderRef ref="File" />
+		</AsyncLogger>
+		<AsyncLogger name="org.springframework.core" level="debug" additivity="false">
+			<AppenderRef ref="File" />
+		</AsyncLogger>
+		<AsyncLogger name="com" level="debug" additivity="false">
+			<AppenderRef ref="File" />
+		</AsyncLogger>
+		<Root level="error">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="File" />
+		</Root>
+	</Loggers>
+
+</Configuration>
